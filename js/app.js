@@ -15,7 +15,10 @@ document.addEventListener("DOMContentLoaded", function(event){
         this.board = document.querySelectorAll('#board div'),
         this.character = new Character,
         this.apple = new Apple,
-        this.score = 0 
+        this.score = 0,
+        self = this,
+        this.show(),
+        document.addEventListener('keydown', this.keyboard)
         
 //        this.position = function (x, y) {
 //            var index = x + y * 10;
@@ -29,12 +32,18 @@ document.addEventListener("DOMContentLoaded", function(event){
 //        }
     }
     
+    var self = this;
+    
     Game.prototype.position = function (a, b) {
         var index = a + b * 10;
         return index;
     };
     
     Game.prototype.show = function() {
+        for (var i = 0; i<this.board.length; i++) {
+            this.board[i].classList.remove('character');
+        }
+        
         var characterPosition = this.position(this.character.x, this.character.y);
         this.board[characterPosition].classList.add('character');
         
@@ -42,16 +51,53 @@ document.addEventListener("DOMContentLoaded", function(event){
         this.board[applePosition].classList.add('apple');
     };
     
+    Game.prototype.keyboard = function(event){
+        var keyCode = event.which;
+        console.log(keyCode);
+        
+        switch (keyCode) {
+            case 37:
+                self.direction = 'left';
+                break;
+            case 38: 
+                self.direction = 'up';
+                break;
+            case 39: 
+                self.direction = 'right';
+                break;
+            case 40: 
+                self.direction = 'down';
+                break;
+        }
+    };
     
-     var me = new Game();
+    Game.prototype.move = function() {
+        switch(self.character.direction) {
+            case 'up':
+                self.character.y--;
+                break;
+            case 'down': 
+                self.character.y++;
+                break;
+            case 'left':
+                self.character.x--;
+                break;
+            case 'right':
+                self.character.x++;
+                break;
+        } self.show()
+    };
     
-    //console.log(me.board);
-    console.log(me.character.x);
-    console.log(me.apple);
-    console.log(me.score);
-    
-    me.show();
-    //me.show();
-    //me.board[0].classList.add('character');
-   // me.board[56].classList.add('apple');
+    new Game();
+//     var me = new Game();
+//    
+//    //console.log(me.board);
+//    console.log(me.character.x);
+//    console.log(me.apple);
+//    console.log(me.score);
+//    
+//    me.show();
+//    //me.show();
+//    //me.board[0].classList.add('character');
+//   // me.board[56].classList.add('apple');
 });
