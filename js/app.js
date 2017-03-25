@@ -1,22 +1,25 @@
 document.addEventListener("DOMContentLoaded", function(event){
     
+    //object constructor 
     function Character () {
         this.x = 0,
         this.y = 0,
         this.direction = 'right'
     }
     
+    //object constructor
     function Apple () {
+        // random position 
         this.x = Math.floor(Math.random()*10),
         this.y = Math.floor(Math.random()*10)
     }
     
+    //object constructor
     function Game () {
         this.board = document.querySelectorAll('#board div'),
         this.character = new Character,
         this.apple = new Apple,
         this.score = 0,
-        self = this,
         this.show(),
         document.addEventListener('keydown', this.keyboard)
         
@@ -34,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function(event){
     
     var self = this;
     
+    // Object prototype for calculation of position by finding index of div 
     Game.prototype.position = function (a, b) {
         var index = a + b * 10;
         return index;
